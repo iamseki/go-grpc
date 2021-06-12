@@ -2,6 +2,7 @@
 
 ## Tutorial package :information_source:
 
+This *package* were based on **[Protocol Buffers Basics: Go Tutorial](https://developers.google.com/protocol-buffers/docs/gotutorial)** with _addition_ of gRPC server up and running.
 ### Generate Protobuf files
 
 - To generate messages
