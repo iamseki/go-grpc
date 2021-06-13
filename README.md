@@ -28,3 +28,7 @@ The client uses the proto genereated file to make calls into server methods.
 
 ---
 
+## Pattern 1 - Unary RPC
+
+
+
