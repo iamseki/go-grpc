@@ -7,6 +7,7 @@ option go_package = "patterns/proto";
 
 service OrderManagement {
     rpc getOrder(google.protobuf.StringValue) returns (Order);
+    rpc searchOrders(google.protobuf.StringValue) returns (stream Order);
 }
 
 message Order {

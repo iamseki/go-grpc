@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 
 	"github.com/golang/protobuf/ptypes/wrappers"
@@ -23,12 +24,15 @@ func main() {
 		log.Fatalf("Error on get Order ID: 1, %v", err)
 	}
 
-	log.Printf("Order 1: %v", order)
+	log.Printf("Response from GetOrder 1: %v", order)
 
-	order, err = client.GetOrder(context.TODO(), &wrappers.StringValue{Value: "2"})
-	if err != nil {
-		log.Fatalf("Error on get Order ID: 1, %v", err)
+	searchStream, _ := client.SearchOrders(context.TODO(), &wrappers.StringValue{Value: "Arroz"})
+
+	for {
+		searchOrder, err := searchStream.Recv()
+		if err == io.EOF {
+			break
+		}
+		log.Println("Search Result:", searchOrder)
 	}
-
-	log.Printf("Order 2: %v", order)
 }
