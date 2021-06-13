@@ -8,20 +8,21 @@ import (
 )
 
 type OrderManagementServer struct {
-	orders []proto.Order
+	orders map[string]*proto.Order
+	proto.UnimplementedOrderManagementServer
 }
 
-func NewOrderManagementServer() OrderManagementServer {
-	return OrderManagementServer{
-		orders: []proto.Order{
-			{
+func NewOrderManagementServer() *OrderManagementServer {
+	return &OrderManagementServer{
+		orders: map[string]*proto.Order{
+			"1": {
 				Id:          "1",
 				Description: "Comida enlatada",
 				Price:       214.17,
 				Destination: "São Paulo",
 				Items:       []string{"Espinafre", "Milho", "Leite moça"},
 			},
-			{
+			"2": {
 				Id:          "2",
 				Description: "Alimentos",
 				Price:       17.9,
@@ -29,22 +30,11 @@ func NewOrderManagementServer() OrderManagementServer {
 				Items:       []string{"Arroz", "Feijão", "Macarrão"},
 			},
 		},
+		UnimplementedOrderManagementServer: proto.UnimplementedOrderManagementServer{},
 	}
 }
 
 func (s *OrderManagementServer) GetOrder(ctx context.Context, orderId *wrappers.StringValue) (*proto.Order, error) {
-	order := s.findOrder(orderId.String())
+	order := s.orders[orderId.GetValue()]
 	return order, nil
-}
-
-func (s *OrderManagementServer) findOrder(Id string) *proto.Order {
-	order := proto.Order{}
-
-	for _, o := range s.orders {
-		if o.Id == Id {
-			return &o
-		}
-	}
-
-	return &order
 }
