@@ -28,7 +28,17 @@ The client uses the proto genereated file to make calls into server methods.
 
 ---
 
-## Pattern 1 - Unary RPC
+## Patterns Package
+### Pattern 1 - Unary RPC
 
+- Style Request and Response approach. RPC Client call a remote method that responds with a single response.
+### Pattern 2 - Server Streaming RPC
+
+- RPC Client call once a remote method that responds with a stream response (multiples responses until **gRPC Server** close the stream).
+### Pattern 3 - Client Streaming RPC
+
+- RPC Client call more than one time a remote method that only responds when **gRPC Client** close the stream.
+
+### Pattern 4 - Bidirectional Streaming RPC
 
 
