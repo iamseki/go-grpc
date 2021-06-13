@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"strings"
 
@@ -62,4 +63,18 @@ func (s *OrderManagementServer) SearchOrders(searchQuery *wrappers.StringValue, 
 		}
 	}
 	return nil
+}
+
+func (s *OrderManagementServer) UpdateOrders(stream proto.OrderManagement_UpdateOrdersServer) error {
+	ordersStr := "Updated Order IDs:"
+	for {
+		order, err := stream.Recv()
+		if err == io.EOF {
+			return stream.SendAndClose(&wrappers.StringValue{Value: "Orders Processed: " + ordersStr})
+		}
+		// update order
+		s.orders[order.Id] = order
+		log.Println("Order ID", order.Id, ": Updated")
+		ordersStr += order.Id + ", "
+	}
 }
