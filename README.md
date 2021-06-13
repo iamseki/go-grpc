@@ -22,5 +22,9 @@ Implementations of interfaces generated in `addressbook_grpc.pb.go` accordingly 
 
 As the gRPC server deppends only on interfaces we can easily testing its methods in isolation.
 
+### Client
+
+The client uses the proto genereated file to make calls into server methods.
+
 ---
 
